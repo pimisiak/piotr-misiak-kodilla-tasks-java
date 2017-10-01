@@ -10,29 +10,29 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/tasks")
 public class TaskController {
 
-    @RequestMapping(method = RequestMethod.GET, value = "/tasks")
+    @RequestMapping(method = RequestMethod.GET)
     public List<TaskDto> getTasks() {
         return new ArrayList<>();
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/tasks/{id}")
-    public TaskDto getTask(@PathVariable("id") final String taskId) {
+    @RequestMapping(method = RequestMethod.GET, value = "/{id}")
+    public TaskDto getTask(@PathVariable("id") final long taskId) {
         return new TaskDto((long)1, "test title", "test_content");
     }
 
-    @RequestMapping(method = RequestMethod.DELETE, value = "/tasks/{id}")
-    public void deleteTask(@PathVariable("id") final String taskId) {
+    @RequestMapping(method = RequestMethod.DELETE, value = "/{id}")
+    public void deleteTask(@PathVariable("id") final long taskId) {
     }
 
-    @RequestMapping(method = RequestMethod.PUT, value = "/tasks")
-    public TaskDto updateTask(final TaskDto taskDto) {
+    @RequestMapping(method = RequestMethod.PUT, value = "/{id}")
+    public TaskDto updateTask(@PathVariable("id") final long taskId, final TaskDto taskDto) {
         return new TaskDto((long)1, "Edited test title", "Test content");
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/tasks")
+    @RequestMapping(method = RequestMethod.POST)
     public void createTask(final TaskDto taskDto) {
     }
 }
