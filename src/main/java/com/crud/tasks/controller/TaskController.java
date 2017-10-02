@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,11 +29,11 @@ public class TaskController {
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "/{id}")
-    public TaskDto updateTask(@PathVariable("id") final long taskId, final TaskDto taskDto) {
+    public TaskDto updateTask(@PathVariable("id") final long taskId, @RequestBody final TaskDto taskDto) {
         return new TaskDto((long)1, "Edited test title", "Test content");
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public void createTask(final TaskDto taskDto) {
+    public void createTask(@RequestBody final TaskDto taskDto) {
     }
 }
