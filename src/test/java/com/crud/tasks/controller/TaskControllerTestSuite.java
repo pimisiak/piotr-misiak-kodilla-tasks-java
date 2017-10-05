@@ -27,7 +27,6 @@ public class TaskControllerTestSuite {
     private WebApplicationContext webAppCtx;
     private MockMvc mockMvc;
 
-
     @Before
     public void setup() {
         mockMvc = webAppContextSetup(webAppCtx).build();
