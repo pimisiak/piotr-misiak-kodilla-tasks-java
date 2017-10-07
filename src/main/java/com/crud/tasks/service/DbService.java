@@ -4,6 +4,8 @@ import com.crud.tasks.domain.Task;
 import com.crud.tasks.repository.TaskRepository;
 import java.util.List;
 import javax.persistence.NoResultException;
+
+import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +15,7 @@ public class DbService {
     private TaskRepository repository;
 
     public List<Task> getAllTasks() {
-        return repository.findAll();
+        return Lists.newArrayList(repository.findAll());
     }
 
     public Task getTaskById(final Long id) {
