@@ -4,6 +4,7 @@ import com.crud.tasks.controller.TaskNotFoundException;
 import com.crud.tasks.domain.Task;
 import com.crud.tasks.repository.TaskRepository;
 import java.util.List;
+import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,11 +25,18 @@ public class DbService {
         return repository.save(task);
     }
 
-    public void deleteTaskById(final Long id) {
-        repository.deleteById(id);
+    @Transactional
+    public Task updateTask(final Long id, final Task task) {
+        final Task updatedTask = findTaskById(id);
+        updatedTask.setTitle(task.getTitle());
+        updatedTask.setContent(task.getContent());
+        return updatedTask;
     }
 
-    public boolean existsTaskById(final Long id) {
-        return repository.existsById(id);
+    public void deleteTaskById(final Long id) {
+        if (repository.existsById(id)) {
+            repository.deleteById(id);
+        }
+        throw new TaskNotFoundException();
     }
 }

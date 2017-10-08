@@ -36,21 +36,13 @@ public class TaskController {
 
     @RequestMapping(method = RequestMethod.DELETE, value = "/{id}")
     public void deleteTask(@PathVariable("id") final long taskId) {
-        if (service.existsTaskById(taskId)) {
-            service.deleteTaskById(taskId);
-            return;
-        }
-        throw new TaskNotFoundException();
+        service.deleteTaskById(taskId);
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public TaskDto updateTask(@PathVariable("id") final long taskId, @RequestBody final TaskDto taskDto) {
         Preconditions.checkNotNull(taskDto);
-        if (service.existsTaskById(taskId)) {
-            final TaskDto updatedTaskDto = new TaskDto(taskId, taskDto.getTitle(), taskDto.getContent());
-            return taskMapper.mapToTaskDto(service.saveTask(taskMapper.mapToTask(updatedTaskDto)));
-        }
-        throw new TaskNotFoundException();
+        return taskMapper.mapToTaskDto(service.updateTask(taskId, taskMapper.mapToTask(taskDto)));
     }
 
     @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
