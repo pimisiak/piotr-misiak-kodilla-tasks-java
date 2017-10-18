@@ -41,7 +41,7 @@ public class TaskController {
         service.deleteTaskById(taskId);
     }
 
-    @RequestMapping(method = RequestMethod.PUT, value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(method = RequestMethod.PUT, value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public TaskDto updateTask(@PathVariable("id") final long taskId, @RequestBody final TaskDto taskDto) {
         Preconditions.checkNotNull(taskDto);
         return taskMapper.mapToTaskDto(service.updateTask(taskId, taskMapper.mapToTask(taskDto)));
