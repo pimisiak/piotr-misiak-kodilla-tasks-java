@@ -6,8 +6,10 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
+import com.crud.tasks.TasksApplication;
+import com.crud.tasks.domain.Task;
+import com.crud.tasks.service.DbService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,17 +17,30 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.web.context.WebApplicationContext;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest
+@SpringBootTest(
+        webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
+        classes = TasksApplication.class
+)
 @AutoConfigureMockMvc
+@TestPropertySource(
+        locations = "classpath:application-integrationtest.properties"
+)
 public class TaskControllerTestSuite {
     @Autowired
     private MockMvc mockMvc;
+    @Autowired
+    private DbService dbService;
+
+    @Before
+    public void beforeTests() {
+        final Task task = new Task(1L, "Test task title", "Test task content");
+        dbService.saveTask(task);
+    }
 
     @Test
     public void testGetTasks() throws Exception {
