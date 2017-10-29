@@ -11,6 +11,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,21 +25,12 @@ public class TrelloController {
     @Autowired
     private TrelloClient trelloClient;
 
-    @RequestMapping(method = RequestMethod.GET, value = "/boards")
-    public void getTrelloBoards() {
-        final List<TrelloBoardDto> trelloBoards = trelloClient.getBoards();
-        trelloBoards.stream()
-                .filter(trelloBoardDto -> trelloBoardDto.getName().contains("Kodilla"))
-                .filter(trelloBoardDto -> !trelloBoardDto.getId().isEmpty())
-                .forEach(trelloBoardDto -> {
-                    System.out.println(trelloBoardDto.getId() + " " + trelloBoardDto.getName());
-                    System.out.println("This board contains lists: ");
-                    trelloBoardDto.getLists().forEach(trelloList ->
-                            System.out.printf("%s - %s - %s%n", trelloList.getId(), trelloList.getName(), trelloList.isClosed()));
-                });
+    @RequestMapping(method = RequestMethod.GET, value = "/boards", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<TrelloBoardDto> getTrelloBoards() {
+        return trelloClient.getBoards();
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/cards")
+    @RequestMapping(method = RequestMethod.POST, value = "/cards", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public CreatedTrelloCard createTrelloCard(@RequestBody final TrelloCardDto trelloCardDto) {
         Preconditions.checkNotNull(trelloCardDto);
         return trelloClient.createNewCard(trelloCardDto);
