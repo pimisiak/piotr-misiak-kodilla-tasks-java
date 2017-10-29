@@ -1,7 +1,13 @@
 package com.crud.tasks.trello.client;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.when;
+
+import com.crud.tasks.domain.CreatedTrelloCard;
 import com.crud.tasks.domain.TrelloBoardDto;
+import com.crud.tasks.domain.TrelloCardDto;
 import com.crud.tasks.trello.config.TrelloConfig;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -11,10 +17,8 @@ import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
-
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.when;
+import java.util.Collections;
+import java.util.List;
 
 @RunWith(MockitoJUnitRunner.class)
 public class TrelloClientTest {
@@ -25,18 +29,58 @@ public class TrelloClientTest {
     @Mock
     private TrelloConfig trelloConfig;
 
-    @Test
-    public void shouldFetchTrelloBoards() throws URISyntaxException {
-        // Given
+    @Before
+    public void initMocksBeforeTest() {
         when(trelloConfig.getTrelloApiEndpoint()).thenReturn("http://test.com");
         when(trelloConfig.getTrelloAppKey()).thenReturn("test");
         when(trelloConfig.getTrelloAppToken()).thenReturn("test");
-        final TrelloBoardDto[] trelloBoards = new TrelloBoardDto[1];
-        trelloBoards[0] = new TrelloBoardDto("test_id", "test_board", new ArrayList<>());
-        final URI uri = new URI(String.format("http://test.com/members/kodillacrudtasks/boards?key=test&token=test&fields=name,id&lists=all",
-                trelloConfig.getTrelloUserName()));
-        // When
+    }
 
+    @Test
+    public void shouldFetchTrelloBoards() throws URISyntaxException {
+        // Given
+        final TrelloBoardDto[] trelloBoards = {new TrelloBoardDto("test_id", "test_board", Collections.emptyList())};
+        final URI uri = new URI(String.format("http://test.com/members/%s/boards?key=test&token=test&fields=name,id&lists=all",
+                trelloConfig.getTrelloUserName()));
+        when(restTemplate.getForObject(uri, TrelloBoardDto[].class)).thenReturn(trelloBoards);
+        // When
+        final List<TrelloBoardDto> fetchedTrelloBoards = trelloClient.getBoards();
         // Then
+        assertThat(fetchedTrelloBoards).hasSize(1);
+        assertThat(fetchedTrelloBoards.get(0))
+                .extracting(TrelloBoardDto::getId, TrelloBoardDto::getName, TrelloBoardDto::getLists)
+                .containsExactly("test_id", "test_board", Collections.emptyList());
+    }
+
+    @Test
+    public void shouldCreateCard() throws URISyntaxException {
+        // Given
+        final TrelloCardDto trelloCardDto = new TrelloCardDto("Test task", "Test Description", "top", "test_id");
+        final URI uri = new URI("http://test.com/cards?key=test&token=test&name=Test%20task&desc=Test%20Description&pos=top&idList=test_id");
+        final CreatedTrelloCard createdTrelloCard = new CreatedTrelloCard(
+                "1",
+                "Test task",
+                "http://test.com",
+                null
+        );
+        when(restTemplate.postForObject(uri, null, CreatedTrelloCard.class)).thenReturn(createdTrelloCard);
+        // When
+        final CreatedTrelloCard newCreatedTrelloCard = trelloClient.createNewCard(trelloCardDto);
+        // Then
+        assertThat(newCreatedTrelloCard)
+                .extracting(CreatedTrelloCard::getId, CreatedTrelloCard::getName, CreatedTrelloCard::getShortUrl, CreatedTrelloCard::getBadges)
+                .containsExactly("1", "Test task", "http://test.com", null);
+    }
+
+    @Test
+    public void shouldReturnEmptyList() throws URISyntaxException {
+        // Given
+        final URI uri = new URI(String.format("http://test.com/members/%s/boards?key=test&token=test&fields=name,id&lists=all",
+                trelloConfig.getTrelloUserName()));
+        when(restTemplate.getForObject(uri, TrelloBoardDto[].class)).thenReturn(null);
+        // When
+        final List<TrelloBoardDto> fetchedTrelloBoards = trelloClient.getBoards();
+        // Then
+        assertThat(fetchedTrelloBoards).hasSize(0);
     }
 }
