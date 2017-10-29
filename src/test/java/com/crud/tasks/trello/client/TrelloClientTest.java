@@ -10,6 +10,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 
 import static org.junit.Assert.*;
@@ -25,13 +26,15 @@ public class TrelloClientTest {
     private TrelloConfig trelloConfig;
 
     @Test
-    public void shouldFetchTrelloBoards() {
+    public void shouldFetchTrelloBoards() throws URISyntaxException {
         // Given
         when(trelloConfig.getTrelloApiEndpoint()).thenReturn("http://test.com");
         when(trelloConfig.getTrelloAppKey()).thenReturn("test");
         when(trelloConfig.getTrelloAppToken()).thenReturn("test");
         final TrelloBoardDto[] trelloBoards = new TrelloBoardDto[1];
         trelloBoards[0] = new TrelloBoardDto("test_id", "test_board", new ArrayList<>());
+        final URI uri = new URI(String.format("http://test.com/members/kodillacrudtasks/boards?key=test&token=test&fields=name,id&lists=all",
+                trelloConfig.getTrelloUserName()));
         // When
 
         // Then
