@@ -1,8 +1,8 @@
 package com.crud.tasks.controller;
 
-import com.crud.tasks.domain.CreatedTrelloCard;
-import com.crud.tasks.domain.TrelloBoardDto;
-import com.crud.tasks.domain.TrelloCardDto;
+import com.crud.tasks.trello.domain.TrelloCreatedCardDto;
+import com.crud.tasks.trello.domain.TrelloBoardDto;
+import com.crud.tasks.trello.domain.TrelloCardDto;
 import com.crud.tasks.trello.client.TrelloClient;
 
 import com.google.common.base.Preconditions;
@@ -31,7 +31,7 @@ public class TrelloController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/cards", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public CreatedTrelloCard createTrelloCard(@RequestBody final TrelloCardDto trelloCardDto) {
+    public TrelloCreatedCardDto createTrelloCard(@RequestBody final TrelloCardDto trelloCardDto) {
         Preconditions.checkNotNull(trelloCardDto);
         return trelloClient.createNewCard(trelloCardDto);
     }
