@@ -1,8 +1,8 @@
 package com.crud.tasks.trello.client;
 
-import com.crud.tasks.domain.CreatedTrelloCard;
-import com.crud.tasks.domain.TrelloBoardDto;
-import com.crud.tasks.domain.TrelloCardDto;
+import com.crud.tasks.trello.domain.TrelloCreatedCardDto;
+import com.crud.tasks.trello.domain.TrelloBoardDto;
+import com.crud.tasks.trello.domain.TrelloCardDto;
 import com.crud.tasks.trello.config.TrelloConfig;
 
 import java.net.URI;
@@ -48,8 +48,8 @@ public class TrelloClient {
                 .build().encode().toUri();
     }
 
-    public CreatedTrelloCard createNewCard(final TrelloCardDto trelloCardDto) {
-        return restTemplate.postForObject(buildUriForCreateNewCard(trelloCardDto), null, CreatedTrelloCard.class);
+    public TrelloCreatedCardDto createNewCard(final TrelloCardDto trelloCardDto) {
+        return restTemplate.postForObject(buildUriForCreateNewCard(trelloCardDto), null, TrelloCreatedCardDto.class);
 
     }
 

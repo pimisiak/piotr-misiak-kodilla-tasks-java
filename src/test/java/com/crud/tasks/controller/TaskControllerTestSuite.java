@@ -9,7 +9,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.crud.tasks.TasksApplication;
 import com.crud.tasks.domain.Task;
-import com.crud.tasks.service.DbService;
+import com.crud.tasks.service.TaskService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -34,12 +34,12 @@ public class TaskControllerTestSuite {
     @Autowired
     private MockMvc mockMvc;
     @Autowired
-    private DbService dbService;
+    private TaskService taskService;
 
     @Before
     public void beforeTests() {
         final Task task = new Task(1L, "Test task title", "Test task content");
-        dbService.saveTask(task);
+        taskService.saveTask(task);
     }
 
     @Test

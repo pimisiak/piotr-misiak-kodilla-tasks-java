@@ -3,9 +3,9 @@ package com.crud.tasks.trello.client;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
-import com.crud.tasks.domain.CreatedTrelloCard;
-import com.crud.tasks.domain.TrelloBoardDto;
-import com.crud.tasks.domain.TrelloCardDto;
+import com.crud.tasks.trello.domain.TrelloCreatedCardDto;
+import com.crud.tasks.trello.domain.TrelloBoardDto;
+import com.crud.tasks.trello.domain.TrelloCardDto;
 import com.crud.tasks.trello.config.TrelloConfig;
 import org.junit.Before;
 import org.junit.Test;
@@ -57,18 +57,19 @@ public class TrelloClientTest {
         // Given
         final TrelloCardDto trelloCardDto = new TrelloCardDto("Test task", "Test Description", "top", "test_id");
         final URI uri = new URI("http://test.com/cards?key=test&token=test&name=Test%20task&desc=Test%20Description&pos=top&idList=test_id");
-        final CreatedTrelloCard createdTrelloCard = new CreatedTrelloCard(
+        final TrelloCreatedCardDto trelloCreatedCardDto = new TrelloCreatedCardDto(
                 "1",
                 "Test task",
                 "http://test.com",
                 null
         );
-        when(restTemplate.postForObject(uri, null, CreatedTrelloCard.class)).thenReturn(createdTrelloCard);
+        when(restTemplate.postForObject(uri, null, TrelloCreatedCardDto.class)).thenReturn(trelloCreatedCardDto);
         // When
-        final CreatedTrelloCard newCreatedTrelloCard = trelloClient.createNewCard(trelloCardDto);
+        final TrelloCreatedCardDto newTrelloCreatedCardDto = trelloClient.createNewCard(trelloCardDto);
         // Then
-        assertThat(newCreatedTrelloCard)
-                .extracting(CreatedTrelloCard::getId, CreatedTrelloCard::getName, CreatedTrelloCard::getShortUrl, CreatedTrelloCard::getBadges)
+        assertThat(newTrelloCreatedCardDto)
+                .extracting(TrelloCreatedCardDto::getId, TrelloCreatedCardDto::getName,
+                        TrelloCreatedCardDto::getShortUrl, TrelloCreatedCardDto::getTrelloBadgeDto)
                 .containsExactly("1", "Test task", "http://test.com", null);
     }
 
