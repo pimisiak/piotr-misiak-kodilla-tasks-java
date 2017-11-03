@@ -3,8 +3,13 @@ package com.crud.tasks.controller;
 import com.crud.tasks.domain.TaskDto;
 import com.crud.tasks.mapper.TaskMapper;
 import com.crud.tasks.service.TaskService;
+
 import com.google.common.base.Preconditions;
+
+import io.swagger.annotations.Api;
+
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -17,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+@Api
 @RestController
 @RequestMapping("/api/v1/tasks")
 @CrossOrigin(origins = "*")
