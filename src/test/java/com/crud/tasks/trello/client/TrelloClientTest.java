@@ -3,9 +3,9 @@ package com.crud.tasks.trello.client;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
-import com.crud.tasks.trello.domain.TrelloCreatedCardDto;
-import com.crud.tasks.trello.domain.TrelloBoardDto;
-import com.crud.tasks.trello.domain.TrelloCardDto;
+import com.crud.tasks.trello.dto.TrelloCreatedCardDto;
+import com.crud.tasks.trello.dto.TrelloBoardDto;
+import com.crud.tasks.trello.dto.TrelloCardDto;
 import com.crud.tasks.trello.config.TrelloConfig;
 import org.junit.Before;
 import org.junit.Test;

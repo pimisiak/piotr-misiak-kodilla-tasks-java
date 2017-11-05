@@ -1,7 +1,7 @@
 package com.crud.tasks.service;
 
 import com.crud.tasks.controller.TaskNotFoundException;
-import com.crud.tasks.domain.Task;
+import com.crud.tasks.entity.Task;
 import com.crud.tasks.repository.TaskRepository;
 import java.util.List;
 import javax.transaction.Transactional;

@@ -1,7 +1,7 @@
 package com.crud.tasks.mapper;
 
-import com.crud.tasks.domain.Task;
-import com.crud.tasks.domain.TaskDto;
+import com.crud.tasks.entity.Task;
+import com.crud.tasks.dto.TaskDto;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.stereotype.Component;

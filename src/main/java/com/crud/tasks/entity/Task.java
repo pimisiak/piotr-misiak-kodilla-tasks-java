@@ -1,4 +1,4 @@
-package com.crud.tasks.domain;
+package com.crud.tasks.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

@@ -8,7 +8,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.crud.tasks.TasksApplication;
-import com.crud.tasks.domain.Task;
+import com.crud.tasks.entity.Task;
 import com.crud.tasks.service.TaskService;
 import org.junit.Before;
 import org.junit.Test;
