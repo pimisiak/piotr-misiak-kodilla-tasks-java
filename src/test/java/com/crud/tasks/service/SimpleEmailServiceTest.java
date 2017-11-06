@@ -1,6 +1,7 @@
 package com.crud.tasks.service;
 
 import com.crud.tasks.domain.Mail;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -30,9 +31,8 @@ public class SimpleEmailServiceTest {
         mailMessage.setTo(mail.getMailTo());
         mailMessage.setSubject(mail.getSubject());
         mailMessage.setText(mail.getMessage());
-        final String toCc = mail.getToCc();
-        if (toCc != null) {
-            mailMessage.setCc(toCc);
+        if (StringUtils.isNotBlank(mail.getToCc())) {
+            mailMessage.setCc(mail.getToCc());
         }
         // When
         simpleEmailService.send(mail);
