@@ -23,7 +23,8 @@ public class SimpleEmailServiceTest {
     @Test
     public void shouldSendEmail() {
         // Given
-        final Mail mail = Mail.builder("test@test.com")
+        final Mail mail = Mail.builder()
+                .mailTo("test@test.com")
                 .subject("Test")
                 .message("Test message")
                 .build();

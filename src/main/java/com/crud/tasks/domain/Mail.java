@@ -5,15 +5,11 @@ import lombok.Getter;
 import lombok.ToString;
 
 @Getter
-@Builder(builderMethodName = "privateBuilder")
+@Builder
 @ToString
 public class Mail {
     private String mailTo;
     private String subject;
     private String message;
     private String toCc;
-
-    public static MailBuilder builder(final String mailTo) {
-        return privateBuilder().mailTo(mailTo);
-    }
 }
