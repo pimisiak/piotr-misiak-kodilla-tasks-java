@@ -4,7 +4,7 @@ import com.crud.tasks.trello.dto.TrelloBoardDto;
 import com.crud.tasks.trello.dto.TrelloCardDto;
 import com.crud.tasks.trello.dto.TrelloCreatedCardDto;
 
-import com.crud.tasks.trello.service.TrelloService;
+import com.crud.tasks.trello.facade.TrelloFacade;
 import com.google.common.base.Preconditions;
 
 import io.swagger.annotations.Api;
@@ -28,17 +28,17 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin(origins = "*")
 public class TrelloController {
     @Autowired
-    private TrelloService trelloService;
+    private TrelloFacade trelloFacade;
 
     @RequestMapping(method = RequestMethod.GET, value = "/boards", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<TrelloBoardDto> getTrelloBoards() {
-        return trelloService.fetchTrelloBoards();
+        return trelloFacade.fetchTrelloBoards();
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/cards", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public TrelloCreatedCardDto createTrelloCard(@RequestBody final TrelloCardDto trelloCardDto) {
         Preconditions.checkNotNull(trelloCardDto);
-        return trelloService.createTrelloCard(trelloCardDto);
+        return trelloFacade.createCard(trelloCardDto);
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
