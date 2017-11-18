@@ -17,11 +17,8 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
 public class TrelloMapperTestSuite {
-    @Autowired
-    private TrelloMapper trelloMapper;
+    private TrelloMapper trelloMapper = new TrelloMapper();
 
     @Test
     public void testMapToBoard() {
