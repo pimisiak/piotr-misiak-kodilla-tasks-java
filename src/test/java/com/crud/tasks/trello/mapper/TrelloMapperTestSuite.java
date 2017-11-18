@@ -1,5 +1,6 @@
 package com.crud.tasks.trello.mapper;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import com.crud.tasks.trello.domain.TrelloBoard;
 import com.crud.tasks.trello.domain.TrelloCard;
 import com.crud.tasks.trello.domain.TrelloList;
@@ -7,15 +8,8 @@ import com.crud.tasks.trello.dto.TrelloBoardDto;
 import com.crud.tasks.trello.dto.TrelloCardDto;
 import com.crud.tasks.trello.dto.TrelloListDto;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
-
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 public class TrelloMapperTestSuite {
     private TrelloMapper trelloMapper = new TrelloMapper();
