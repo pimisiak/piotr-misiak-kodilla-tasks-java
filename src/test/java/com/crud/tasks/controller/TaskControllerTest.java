@@ -16,6 +16,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -53,8 +54,8 @@ public class TaskControllerTest {
     @Test
     public void testGetTasks() throws Exception {
         //Given
-        final List<Task> tasks = prepareTestTasks();
-        final List<TaskDto> taskDtos = prepareTestTaskDtos();
+        final List<Task> tasks = Collections.singletonList(task);
+        final List<TaskDto> taskDtos = Collections.singletonList(taskDto);
         when(taskService.findAllTasks()).thenReturn(tasks);
         when(taskMapper.mapToTaskDtoList(anyList())).thenReturn(taskDtos);
         //When
@@ -65,18 +66,6 @@ public class TaskControllerTest {
                 .andExpect(jsonPath("$[0].id").value(1L))
                 .andExpect(jsonPath("$[0].title").value("Test Title"))
                 .andExpect(jsonPath("$[0].content").value("Test Content"));
-    }
-
-    private List<Task> prepareTestTasks() {
-        final List<Task> tasks = new ArrayList<>();
-        tasks.add(task);
-        return tasks;
-    }
-
-    private List<TaskDto> prepareTestTaskDtos() {
-        final List<TaskDto> taskDtos = new ArrayList<>();
-        taskDtos.add(taskDto);
-        return taskDtos;
     }
 
     @Test
