@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 public class CompanyConfig {
     @Value("${info.company.name}")
     private String companyName;
-    @Value("${info.company.email")
+    @Value("${info.company.email}")
     private String companyEmail;
     @Value("${info.company.phone}")
     private String companyPhone;
