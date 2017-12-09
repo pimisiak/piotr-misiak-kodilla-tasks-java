@@ -1,21 +1,22 @@
 package com.crud.tasks.config;
 
 import lombok.Getter;
-import org.springframework.beans.factory.annotation.Value;
+import lombok.Setter;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 @Component
 @Getter
+@Setter
+@ConfigurationProperties(prefix = "info.company")
 public class CompanyConfig {
-    @Value("${info.company.name}")
-    private String companyName;
-    @Value("${info.company.email}")
-    private String companyEmail;
-    @Value("${info.company.phone}")
-    private String companyPhone;
+    private String name;
+    private String goal;
+    private String email;
+    private String phone;
 
     @Override
     public String toString() {
-        return String.format("%s | %s | %s", companyName, companyEmail, companyPhone);
+        return String.format("%s | %s | %s", name, email, phone);
     }
 }
