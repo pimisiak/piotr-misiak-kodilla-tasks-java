@@ -68,5 +68,3 @@ dependencies {
 	testCompile('com.google.guava:guava-testlib:22.0')
 	testRuntime('com.h2database:h2:1.4.189')
 }
-
-compileJava.dependsOn(processResources)

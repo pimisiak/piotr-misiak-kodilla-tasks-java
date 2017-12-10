@@ -3,7 +3,9 @@ package com.crud.tasks.trello.service;
 import static java.util.Optional.ofNullable;
 
 import com.crud.tasks.config.AdminConfig;
+import com.crud.tasks.domain.CreatedCardMailDecorator;
 import com.crud.tasks.domain.Mail;
+import com.crud.tasks.domain.MailImpl;
 import com.crud.tasks.service.SimpleEmailService;
 import com.crud.tasks.trello.client.TrelloClient;
 import com.crud.tasks.trello.dto.TrelloBoardDto;
@@ -32,11 +34,13 @@ public class TrelloService {
     public TrelloCreatedCardDto createTrelloCard(final TrelloCardDto trelloCardDto) {
         final TrelloCreatedCardDto newCard = trelloClient.createNewCard(trelloCardDto);
         ofNullable(newCard).ifPresent(card -> emailService.send(
-                Mail.builder()
-                        .mailTo(adminConfig.getAdminMail())
-                        .subject(SUBJECT)
-                        .message(String.format("New card: %s has been created on your Trello account.", card.getName()))
-                        .build()));
+                new CreatedCardMailDecorator(
+                        new MailImpl.Builder()
+                                .mailTo(adminConfig.getAdminMail())
+                                .subject(SUBJECT)
+                                .message(String.format("New card: %s has been created on your Trello account.", card.getName()))
+                                .build())
+        ));
         return newCard;
     }
 }
