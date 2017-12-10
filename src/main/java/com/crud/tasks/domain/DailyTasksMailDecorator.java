@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class DailyTasksMailDecorator extends MailDecorator {
-    private final String templateHtml = "mail/daily-tasks-mail";
+    private static final String TEMPLATE_HTML = "mail/daily-tasks-mail";
     private final Map<String, Object> template = new HashMap<>();
 
     public DailyTasksMailDecorator(final Mail mail) {
@@ -28,6 +28,6 @@ public class DailyTasksMailDecorator extends MailDecorator {
 
     @Override
     public String getTemplateHtml() {
-        return templateHtml;
+        return TEMPLATE_HTML;
     }
 }

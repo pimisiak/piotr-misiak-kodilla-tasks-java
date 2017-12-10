@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 public class CreatedCardMailDecorator extends MailDecorator {
-    private final String templateHtml = "mail/created-trello-card-mail";
+    private static final String TEMPLATE_HTML = "mail/created-trello-card-mail";
     private final Map<String, Object> templateModel = new HashMap<>();
 
     public CreatedCardMailDecorator(final Mail mail) {
@@ -38,6 +38,6 @@ public class CreatedCardMailDecorator extends MailDecorator {
 
     @Override
     public String getTemplateHtml() {
-        return templateHtml;
+        return TEMPLATE_HTML;
     }
 }
