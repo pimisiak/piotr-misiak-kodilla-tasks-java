@@ -7,6 +7,7 @@ public class DailyTasksMailWithTemplate extends MailWithTemplate {
         super(mail);
     }
 
+    @Override
     protected void setTemplateVariables() {
         templateVariables.put("mailTo", getMailTo());
         templateVariables.put("message", getMessage());

@@ -10,6 +10,7 @@ public class CreatedCardMailWithTemplate extends MailWithTemplate {
         super(mail);
     }
 
+    @Override
     protected void setTemplateVariables() {
         final List<String> functionality = new ArrayList<>();
         functionality.add("You can manage your tasks");
