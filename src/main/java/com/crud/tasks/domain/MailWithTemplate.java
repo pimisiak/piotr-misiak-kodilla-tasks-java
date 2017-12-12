@@ -1,16 +1,20 @@
 package com.crud.tasks.domain;
 
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 
-public abstract class MailDecorator implements Mail {
+public abstract class MailWithTemplate implements Mail {
     private final Mail mail;
+    protected final Map<String, Object> templateVariables = new HashMap<>();
 
-    public MailDecorator(final Mail mail) {
+    public MailWithTemplate(final Mail mail) {
         this.mail = mail;
+        setTemplateVariables();
     }
 
-    public abstract Map<String, Object> getTemplateModel();
     public abstract String getTemplateHtml();
+    protected abstract void setTemplateVariables();
 
     @Override
     public String getMailTo() {
@@ -30,5 +34,9 @@ public abstract class MailDecorator implements Mail {
     @Override
     public String getToCc() {
         return mail.getToCc();
+    }
+
+    public Map<String, Object> getTemplateVariables() {
+        return Collections.unmodifiableMap(templateVariables);
     }
 }

@@ -1,7 +1,7 @@
 package com.crud.tasks.scheduler;
 
 import com.crud.tasks.config.AdminConfig;
-import com.crud.tasks.domain.DailyTasksMailDecorator;
+import com.crud.tasks.domain.DailyTasksMailWithTemplate;
 import com.crud.tasks.domain.MailImpl;
 import com.crud.tasks.repository.TaskRepository;
 import com.crud.tasks.service.SimpleEmailService;
@@ -22,7 +22,7 @@ public class EmailScheduler {
     @Scheduled(cron = "0 0 10 * * *")
     public void sendInformationEmail() {
         final long size = taskRepository.count();
-        simpleEmailService.send(new DailyTasksMailDecorator(
+        simpleEmailService.send(new DailyTasksMailWithTemplate(
                 new MailImpl.Builder()
                         .mailTo(adminConfig.getAdminMail())
                         .subject(SUBJECT)

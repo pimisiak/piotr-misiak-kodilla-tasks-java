@@ -3,7 +3,7 @@ package com.crud.tasks.service;
 import com.crud.tasks.config.AdminConfig;
 import com.crud.tasks.config.CompanyConfig;
 import com.crud.tasks.domain.Mail;
-import com.crud.tasks.domain.MailDecorator;
+import com.crud.tasks.domain.MailWithTemplate;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -36,7 +36,7 @@ public class MailCreatorService {
         return mailMessage;
     }
 
-    public MimeMessagePreparator createMimeMessage(final MailDecorator mail) {
+    public MimeMessagePreparator createMimeMessage(final MailWithTemplate mail) {
         return mimeMessage -> {
             MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
             messageHelper.setTo(mail.getMailTo());
@@ -45,9 +45,10 @@ public class MailCreatorService {
         };
     }
 
-    private String processMail(final MailDecorator mail) {
+    //buildCreatedCardTrello
+    private String processMail(final MailWithTemplate mail) {
         final Context context = new Context();
-        context.setVariables(mail.getTemplateModel());
+        context.setVariables(mail.getTemplateVariables());
         context.setVariable("admin", adminConfig);
         context.setVariable("company", companyConfig);
         return templateEngine.process(mail.getTemplateHtml(), context);

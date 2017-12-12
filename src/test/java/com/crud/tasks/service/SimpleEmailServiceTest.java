@@ -1,8 +1,8 @@
 package com.crud.tasks.service;
 
-import com.crud.tasks.domain.DailyTasksMailDecorator;
+import com.crud.tasks.domain.DailyTasksMailWithTemplate;
 import com.crud.tasks.domain.Mail;
-import com.crud.tasks.domain.MailDecorator;
+import com.crud.tasks.domain.MailWithTemplate;
 import com.crud.tasks.domain.MailImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,7 +11,6 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.mail.javamail.MimeMessagePreparator;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -49,15 +48,15 @@ public class SimpleEmailServiceTest {
 
     @Test
     public void shouldSendEmailWithTemplate() {
-        final MailDecorator mailDecorator = new DailyTasksMailDecorator(new MailImpl.Builder()
+        final MailWithTemplate mailWithTemplate = new DailyTasksMailWithTemplate(new MailImpl.Builder()
                 .mailTo("test@test.com")
                 .subject("Test")
                 .message("Test message")
                 .build());
         final MimeMessagePreparator mimeMessagePreparator = ((mimeMessage) -> {});
-        when(mailCreatorService.createMimeMessage(any(MailDecorator.class))).thenReturn(mimeMessagePreparator);
+        when(mailCreatorService.createMimeMessage(any(MailWithTemplate.class))).thenReturn(mimeMessagePreparator);
         // When
-        simpleEmailService.send(mailDecorator);
+        simpleEmailService.send(mailWithTemplate);
         // Then
         verify(javaMailSender, times(1)).send(any(MimeMessagePreparator.class));
     }

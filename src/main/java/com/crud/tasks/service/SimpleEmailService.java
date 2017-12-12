@@ -1,7 +1,7 @@
 package com.crud.tasks.service;
 
 import com.crud.tasks.domain.Mail;
-import com.crud.tasks.domain.MailDecorator;
+import com.crud.tasks.domain.MailWithTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +27,7 @@ public class SimpleEmailService {
         }
     }
 
-    public void send(final MailDecorator mail) {
+    public void send(final MailWithTemplate mail) {
         LOGGER.info("Starting email with template preparation...");
         try {
             javaMailSender.send(mailCreatorService.createMimeMessage(mail));
