@@ -53,6 +53,7 @@ public class TaskController {
         return taskMapper.mapToTaskDto(taskService.updateTask(taskId, taskMapper.mapToTask(taskDto)));
     }
 
+    @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public void createTask(@RequestBody final TaskDto taskDto) {
         Preconditions.checkNotNull(taskDto);
